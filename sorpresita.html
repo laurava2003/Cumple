@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sorpresa de Cumpleaños</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f8f9fa;
+      margin: 0;
+      padding: 0;
+      color: #333;
+      text-align: center;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    h1 {
+      color: #e25c67;
+      margin-bottom: 30px;
+    }
+    .message {
+      background-color: #fff;
+      border-radius: 10px;
+      padding: 20px;
+      margin: 20px 0;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      font-size: 18px;
+      line-height: 1.6;
+    }
+    .photo-gallery {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin: 20px 0;
+    }
+    .photo-frame {
+      width: 220px;
+      height: 220px;
+      border: 5px solid white;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      overflow: hidden;
+      margin: 10px;
+      background-color: #f1f1f1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: #888;
+    }
+    .photo-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .question-container {
+      background-color: #fff;
+      border-radius: 10px;
+      padding: 20px;
+      margin: 30px 0;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    .question {
+      font-size: 22px;
+      margin-bottom: 20px;
+      font-weight: bold;
+      color: #e25c67;
+    }
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+    .btn {
+      padding: 10px 30px;
+      font-size: 18px;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: none;
+    }
+    .btn-yes {
+      background-color: #4CAF50;
+      color: white;
+    }
+    .btn-no {
+      background-color: #e25c67;
+      color: white;
+    }
+    .confetti {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      background-color: #f0f;
+      animation: fall linear forwards;
+      z-index: 1000;
+    }
+    @keyframes fall {
+      to {
+        transform: translateY(100vh);
+      }
+    }
+    .final-message {
+      display: none;
+      font-size: 24px;
+      color: #e25c67;
+      margin: 30px 0;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>¡Feliz cumpleaños, amorsote mio!</h1>
+    
+    <div class="message">
+      
+      Te amo de maneras locas mi amor, le doy gracias a Dios todos los días por bendecirme con tu presencia, eres un hombre 
+      integro, lleno de amor y rodeado de él. Deseo que tu dia sea el mejor de todos, te mando un pico.
+    </div>
+    
+    <div class="photo-gallery">
+      <div class="photo-frame">
+        <img src="1.jpeg" alt="Nuestra foto 1">
+      </div>
+      <div class="photo-frame">
+        <img src="2.jpeg" alt="Nuestra foto 2">
+      </div>
+      <div class="photo-frame">
+        <img src="3.jpeg" alt="Nuestra foto 3">
+      </div>
+      <div class="photo-frame">
+        <img src="4.jpeg" alt="Nuestra foto 4">
+      </div>
+      <div class="photo-frame">
+        <img src="5.jpeg" alt="Nuestra foto 5">
+      </div>
+    </div>
+    
+    <div class="question-container">
+      <div class="question">¿Deseas amarme toda la vida?</div>
+      <div class="buttons">
+        <button class="btn btn-yes" id="yesButton">Sí, para siempre</button>
+        <button class="btn btn-no" id="noButton">No</button>
+      </div>
+    </div>
+    
+    <div class="final-message" id="finalMessage">
+      ¡Te amo muchísimo! Gracias por elegirme cada día :)
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const noButton = document.getElementById('noButton');
+      const yesButton = document.getElementById('yesButton');
+      const finalMessage = document.getElementById('finalMessage');
+      const questionContainer = document.querySelector('.question-container');
+      
+      let noCount = 0;
+      const messages = [
+        "¿Estás seguro? Piénsalo dos veces",
+        "¿De verdad? Inténtalo de nuevo",
+        "Creo que te euqivocaste mi Pug",
+        "¡Última oportunidad!",
+        "¿No me amas?",
+        "Me estás rompiendo el corazón",
+        "Quizás deberías reconsiderarlo",
+        "Te voy a morder duro",
+        "Imposible que no me ames",
+        "Por favor, di que sí"
+      ];
+      
+      noButton.addEventListener('click', function() {
+        noCount++;
+        
+        
+        if (noCount <= messages.length) {
+          noButton.textContent = messages[noCount - 1];
+        } else {
+          
+          noButton.textContent = messages[noCount % messages.length];
+        }
+        
+        //no mas pequeño
+        const currentWidth = parseInt(window.getComputedStyle(noButton).width);
+        noButton.style.padding = `${8 - noCount}px ${20 - noCount * 2}px`;
+        noButton.style.fontSize = `${18 - noCount}px`;
+        
+        //  "sí" más grande
+        yesButton.style.padding = `${10 + noCount * 2}px ${30 + noCount * 5}px`;
+        yesButton.style.fontSize = `${18 + noCount}px`;
+        
+        // "no" a una posición aleatoria
+        setTimeout(() => {
+          const maxX = window.innerWidth - noButton.offsetWidth - 50;
+          const maxY = window.innerHeight - noButton.offsetHeight - 50;
+          const randomX = Math.max(50, Math.floor(Math.random() * maxX));
+          const randomY = Math.max(50, Math.floor(Math.random() * maxY));
+          
+          noButton.style.position = 'fixed';
+          noButton.style.left = `${randomX}px`;
+          noButton.style.top = `${randomY}px`;
+        }, 100);
+      });
+      
+      yesButton.addEventListener('click', function() {
+        // Ocultar la pregunta
+        questionContainer.classList.add('hidden');
+        
+        // Mostrar el mensaje final
+        finalMessage.style.display = 'block';
+        
+      
+        createConfetti();
+      });
+      
+      function createConfetti() {
+        const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff'];
+        
+        for (let i = 0; i < 100; i++) {
+          setTimeout(() => {
+            const confetti = document.createElement('div');
+            confetti.className = 'confetti';
+            confetti.style.left = `${Math.random() * 100}vw`;
+            confetti.style.width = `${Math.random() * 10 + 5}px`;
+            confetti.style.height = `${Math.random() * 10 + 5}px`;
+            confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            confetti.style.animationDuration = `${Math.random() * 3 + 2}s`;
+            
+            document.body.appendChild(confetti);
+            
+            setTimeout(() => {
+              confetti.remove();
+            }, 5000);
+          }, i * 50);
+        }
+      }
+    });
+  </script>
+</body>
+</html>
